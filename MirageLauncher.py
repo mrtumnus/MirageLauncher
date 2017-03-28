@@ -1,6 +1,7 @@
 #!/bin/python
 # Author:   Elliott Partridge
 # Date:     2017-03-28
+"""Python launcher script for Mirage Realms MMORPG"""
 
 import os
 from urllib2 import urlopen, URLError, HTTPError, Request
@@ -11,6 +12,7 @@ mirage_file = os.path.basename(mirage_url)
 
 # From http://stackoverflow.com/a/4028894/973624
 def get_url(url):
+    """Download a URL resource"""
     # Open the url
     try:
         f = urlopen(url)
@@ -27,6 +29,7 @@ def get_url(url):
         print "URL Error:", e.reason, url
 
 def get_url_info(url):
+    """Retrieve headers for a URL"""
     # Get URL headers only
     # derived from http://stackoverflow.com/a/4421485/973624
     request = Request(url)
@@ -36,6 +39,7 @@ def get_url_info(url):
     return response.info()
     
 def get_url_mtime(url):
+    """Get the Last-Modified header for a URL as a datetime"""
     url_info = get_url_info(url)
     
     # Parse Last-Modified time
