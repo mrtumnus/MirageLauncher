@@ -47,17 +47,24 @@ def get_url_mtime(url):
     
 
 if __name__ == "__main__":
-    # Get modification times
-    url_mtime = get_url_mtime(mirage_url)
-    file_mtime = datetime.utcfromtimestamp(os.path.getmtime(mirage_file))
-    
-    # Check if URL time is newer than file (with some wiggle room)
-    if (url_mtime > file_mtime + timedelta(0,30)):
-        print('New version detected')
+    # Check if file exists
+    if os.path.isfile(mirage_file):
+        # Get modification times
+        url_mtime = get_url_mtime(mirage_url)
+        file_mtime = datetime.utcfromtimestamp(os.path.getmtime(mirage_file))
+        
+        # Check if URL time is newer than file (with some wiggle room)
+        if (url_mtime > file_mtime + timedelta(0,30)):
+            print('New version detected')
+            # URL is newer - download and replace file
+            get_url(mirage_url)
+        else:
+            print('File up to date')
+    else:
+        # File does not exists
+        print('File does not exist')
         # URL is newer - download and replace file
         get_url(mirage_url)
-    else:
-        print('File up to date')
         
     # Launch program
     os.system('start ' + mirage_file)
